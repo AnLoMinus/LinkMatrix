@@ -1,0 +1,342 @@
+[
+  {
+    "id": 1,
+    "url": "https://gemini.google.com/share/42bd89d141b0",
+    "name": "Studio Cognitive v4.4",
+    "layer": "META_SYSTEM",
+    "cluster": "STUDIO_COGNITIVE",
+    "version": "4.4",
+    "status": "ACTIVE",
+    "purpose": "שליטת־על ואבולוציית מערכות",
+    "tags": ["meta", "studio", "control"],
+    "parents": [],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/meta/studio-cognitive-v4.4",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 2,
+    "url": "https://gemini.google.com/share/78798cc2c00f",
+    "name": "Studio Cognitive v4.4.4",
+    "layer": "META_SYSTEM",
+    "cluster": "STUDIO_COGNITIVE",
+    "version": "4.4.4",
+    "status": "ACTIVE",
+    "purpose": "ניהול גרסאות ותודעה",
+    "tags": ["meta", "versions"],
+    "parents": [1],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/meta/studio-cognitive-v4.4.4",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 3,
+    "url": "https://gemini.google.com/share/ca26941af8c0",
+    "name": "HolisView Freedom",
+    "layer": "FLOW_SYSTEM",
+    "cluster": "HOLISVIEW",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "גמילה מעישון ושינוי הרגלים",
+    "tags": ["flow", "freedom", "quit"],
+    "parents": [8, 17],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/flow/holisview-freedom",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 4,
+    "url": "https://gemini.google.com/share/317310707237",
+    "name": "Torah ID – 24 Cards",
+    "layer": "IDENTITY_CARDS",
+    "cluster": "TORAH_ID",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "זהות, ערכים, קלפי תודעה",
+    "tags": ["cards", "identity", "torah"],
+    "parents": [6, 15],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/cards/torah-id-24",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 5,
+    "url": "https://gemini.google.com/share/79ca238d5acf",
+    "name": "HolisView ULTRA",
+    "layer": "COGNITIVE_ENGINE",
+    "cluster": "HOLISVIEW",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "מנוע חשיבה אינטגרטיבי",
+    "tags": ["ultra", "engine"],
+    "parents": [17],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/engine/holisview-ultra",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 6,
+    "url": "https://gemini.google.com/share/5467273d4031",
+    "name": "Card Definition",
+    "layer": "CARDS_ENGINE",
+    "cluster": "HOLISVIEW",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "מבנה קלף כיחידת מידע",
+    "tags": ["schema", "card"],
+    "parents": [15],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "schemas/card-definition",
+      "entry_file": "card.schema.json"
+    }
+  },
+  {
+    "id": 7,
+    "url": "https://gemini.google.com/share/013d76a02397",
+    "name": "Personal Prayer System (72 Names)",
+    "layer": "FLOW_SPIRIT",
+    "cluster": "PRAYER",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "תפילה אישית מנוקדת (ע״ב)",
+    "tags": ["prayer", "spirit"],
+    "parents": [19],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/spirit/personal-prayer-72",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 8,
+    "url": "https://gemini.google.com/share/600c22beff62",
+    "name": "HolisView Pro v7.0",
+    "layer": "COGNITIVE_ENGINE",
+    "cluster": "HOLISVIEW",
+    "version": "7.0",
+    "status": "ACTIVE",
+    "purpose": "ניתוח פרד״ס מודרני",
+    "tags": ["pro", "pardes"],
+    "parents": [17],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/engine/holisview-pro-v7",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 9,
+    "url": "https://gemini.google.com/share/e7a1bbb418a1",
+    "name": "HolisView 5.0 Platinum",
+    "layer": "INTEGRATION_MATRIX",
+    "cluster": "HOLISVIEW",
+    "version": "5.0.0",
+    "status": "LEGACY",
+    "purpose": "אינטגרציה מערכתית",
+    "tags": ["matrix", "platinum"],
+    "parents": [],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/matrix/holisview-5.0-platinum",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 10,
+    "url": "https://gemini.google.com/share/da824d8487a1",
+    "name": "HolisView 5.1 Gemini-AI",
+    "layer": "INTEGRATION_MATRIX",
+    "cluster": "HOLISVIEW",
+    "version": "5.1.0",
+    "status": "LEGACY",
+    "purpose": "AI + תודעה",
+    "tags": ["matrix", "gemini-ai"],
+    "parents": [9],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/matrix/holisview-5.1-gemini-ai",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 11,
+    "url": "https://gemini.google.com/share/90918d618301",
+    "name": "HolisView 4.2 GOLD",
+    "layer": "INTEGRATION_MATRIX",
+    "cluster": "HOLISVIEW",
+    "version": "4.2.0",
+    "status": "LEGACY",
+    "purpose": "אינטגרציה מוקדמת",
+    "tags": ["gold", "matrix"],
+    "parents": [],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/matrix/holisview-4.2-gold",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 12,
+    "url": "https://gemini.google.com/share/26470b04c0de",
+    "name": "HolisView PRO 4.1.1",
+    "layer": "COGNITIVE_ENGINE",
+    "cluster": "HOLISVIEW",
+    "version": "4.1.1",
+    "status": "LEGACY",
+    "purpose": "בסיס Pro (דור מוקדם)",
+    "tags": ["pro", "legacy"],
+    "parents": [11],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/engine/holisview-pro-4.1.1",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 13,
+    "url": "https://gemini.google.com/share/d750cd0bda58",
+    "name": "HolisView PRO 4.0",
+    "layer": "COGNITIVE_ENGINE",
+    "cluster": "HOLISVIEW",
+    "version": "4.0",
+    "status": "LEGACY",
+    "purpose": "בסיס Pro ראשוני",
+    "tags": ["pro", "foundation"],
+    "parents": [11],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/engine/holisview-pro-4.0",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 14,
+    "url": "https://gemini.google.com/share/89167e55a63f",
+    "name": "HolisView AI Holistic Analysis System",
+    "layer": "COGNITIVE_ENGINE",
+    "cluster": "HOLISVIEW",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "ניתוח AI הוליסטי",
+    "tags": ["ai", "analysis"],
+    "parents": [8, 17],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/engine/holisview-ai-analysis",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 15,
+    "url": "https://gemini.google.com/share/79e2e9826310",
+    "name": "Infinite Cards Engine",
+    "layer": "CARDS_ENGINE",
+    "cluster": "INFINITE_CARDS",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "מנוע יצירת קלפים אינסופי",
+    "tags": ["infinite", "cards", "generator"],
+    "parents": [6],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/cards/infinite-cards-engine",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 16,
+    "url": "https://gemini.google.com/share/b5f228292073",
+    "name": "HolisView MATRIX Build 8.6 (JSON FIX)",
+    "layer": "INTEGRATION_MATRIX",
+    "cluster": "HOLISVIEW",
+    "version": "8.6",
+    "status": "ACTIVE",
+    "purpose": "תיקוני JSON למטריצה",
+    "tags": ["json", "fix", "matrix"],
+    "parents": [17],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/matrix/holisview-matrix-8.6",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 17,
+    "url": "https://gemini.google.com/share/b9db4d17c38c",
+    "name": "HolisView Unified v9.0 (UNIFIED MATRIX)",
+    "layer": "META_SYSTEM",
+    "cluster": "HOLISVIEW",
+    "version": "9.0",
+    "status": "ACTIVE",
+    "purpose": "מטריצה מאוחדת – שכבת־על",
+    "tags": ["unified", "meta", "v9"],
+    "parents": [],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/meta/holisview-unified-v9",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 18,
+    "url": "https://gemini.google.com/share/b4388898c3c8",
+    "name": "HolisView ULTRA Web (Cloud Sync ALL-IN-ONE)",
+    "layer": "META_SYSTEM",
+    "cluster": "HOLISVIEW",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "ALL-IN-ONE ענני",
+    "tags": ["cloud", "web", "sync"],
+    "parents": [5, 17],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/meta/holisview-ultra-web",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 19,
+    "url": "https://gemini.google.com/share/1d02f2aec10e",
+    "name": "Sefer Yetzirah GEN 2.0",
+    "layer": "KNOWLEDGE_CORE",
+    "cluster": "HOLISVIEW",
+    "version": "2.0",
+    "status": "ACTIVE",
+    "purpose": "ליבת ידע – ספר יצירה מודרני",
+    "tags": ["knowledge", "sefer-yetzirah"],
+    "parents": [],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/knowledge/sefer-yetzirah-gen-2",
+      "entry_file": "README.md"
+    }
+  },
+  {
+    "id": 20,
+    "url": "https://gemini.google.com/share/6f367e6cb814",
+    "name": "Publishing Studio",
+    "layer": "OUTPUT_SYSTEM",
+    "cluster": "PUBLISHING",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "purpose": "הוצאה לאור ותוצרים",
+    "tags": ["publishing", "output"],
+    "parents": [17],
+    "repo": {
+      "repo_name": "MatrixForge",
+      "path": "nodes/output/publishing-studio",
+      "entry_file": "README.md"
+    }
+  }
+]
