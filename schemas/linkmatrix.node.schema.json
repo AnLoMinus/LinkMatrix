@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anlominus.local/schemas/linkmatrix.node.schema.json",
+  "title": "LinkMatrix Node",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "url",
+    "name",
+    "layer",
+    "purpose",
+    "cluster",
+    "version",
+    "status",
+    "repo"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://gemini\\.google\\.com/share/[a-zA-Z0-9]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    },
+    "layer": {
+      "type": "string",
+      "enum": [
+        "META_SYSTEM",
+        "COGNITIVE_ENGINE",
+        "INTEGRATION_MATRIX",
+        "CARDS_ENGINE",
+        "IDENTITY_CARDS",
+        "FLOW_SYSTEM",
+        "FLOW_SPIRIT",
+        "KNOWLEDGE_CORE",
+        "OUTPUT_SYSTEM",
+        "UI_UX"
+      ]
+    },
+    "cluster": {
+      "type": "string",
+      "enum": [
+        "STUDIO_COGNITIVE",
+        "HOLISVIEW",
+        "INFINITE_CARDS",
+        "TORAH_ID",
+        "PRAYER",
+        "PUBLISHING"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "pattern": "^[0-9]+(\\.[0-9]+){0,3}([\\- ][A-Za-z0-9]+)*$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "LEGACY", "DRAFT", "ARCHIVED"]
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 240
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 32 },
+      "uniqueItems": true,
+      "default": []
+    },
+    "parents": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 1 },
+      "uniqueItems": true,
+      "default": []
+    },
+    "repo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo_name", "path", "entry_file"],
+      "properties": {
+        "repo_name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "path": { "type": "string", "minLength": 1, "maxLength": 140 },
+        "entry_file": { "type": "string", "minLength": 1, "maxLength": 140 }
+      }
+    }
+  }
+}
