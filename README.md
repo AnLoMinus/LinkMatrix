@@ -821,4 +821,4 @@ MatrixForge עובד חזק — זה בניין נאמן. ⚡
 
 * `schemas/linkmatrix.node.schema.json` – סכמת JSON רשמית ל־LinkMatrix Node.
 * `data/linkmatrix.nodes.json` – קובץ הדאטה המלא של כל ה־Nodes.
-* `web/index.html` – טבלת HTML אינטראקטיבית + גרף קשרים (עמוד יחיד מוכן ל־GitHub Pages).
+* `index.html` – טבלת HTML אינטראקטיבית + גרף קשרים (עמוד יחיד מוכן ל־GitHub Pages).
