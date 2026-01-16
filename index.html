@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LinkMatrix – Interactive Table</title>
+  <style>
+    :root{
+      --bg:#0b0f1a; --card:#0f172a; --text:#e5e7eb; --muted:#94a3b8;
+      --line:rgba(148,163,184,.18); --glow:rgba(99,102,241,.25);
+      --meta:#8b5cf6; --engine:#22c55e; --matrix:#06b6d4; --cards:#f59e0b;
+      --identity:#ef4444; --flow:#3b82f6; --spirit:#a78bfa; --knowledge:#10b981; --output:#f97316; --uiux:#eab308;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(900px 500px at 20% 0%, var(--glow), transparent 60%), var(--bg);
+      color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; }
+    header{padding:22px 18px; border-bottom:1px solid var(--line);}
+    h1{margin:0 0 8px; font-size:20px}
+    .sub{color:var(--muted); font-size:13px}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px}
+    .panel{display:grid;grid-template-columns:1fr 220px 220px;gap:10px;margin-bottom:12px}
+    input,select{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--line);
+      background:rgba(15,23,42,.75); color:var(--text); outline:none;}
+    .card{background:rgba(15,23,42,.72); border:1px solid var(--line); border-radius:16px; overflow:hidden}
+    table{width:100%; border-collapse:collapse}
+    th,td{padding:12px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+    th{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); background:rgba(2,6,23,.4)}
+    td{font-size:14px}
+    a{color:#93c5fd; text-decoration:none}
+    a:hover{text-decoration:underline}
+    .badge{display:inline-flex;align-items:center;gap:8px; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line); background:rgba(2,6,23,.35); font-size:12px; color:var(--text)}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .mini{font-size:12px;color:var(--muted)}
+    .grid2{display:grid;grid-template-columns:1fr;gap:6px}
+    .graph{padding:12px}
+    svg{width:100%; height:420px; background:rgba(2,6,23,.25); border-radius:14px; border:1px solid var(--line)}
+    .node{cursor:pointer}
+    .node text{font-size:12px; fill:var(--text)}
+    .edge{stroke:rgba(148,163,184,.25); stroke-width:1}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>🧩 LinkMatrix – Interactive Table</h1>
+    <div class="sub">חיפוש 🔎 | פילטר שכבה 🧱 | ייצוא JSON 🧾 | Graph View 🕸️</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="panel">
+    <input id="q" placeholder="🔎 חיפוש לפי שם / תכלית / תגיות..." />
+    <select id="layer">
+      <option value="">🧱 כל השכבות</option>
+      <option value="META_SYSTEM">🛰️ Meta System</option>
+      <option value="COGNITIVE_ENGINE">🧠 Cognitive Engine</option>
+      <option value="INTEGRATION_MATRIX">🧩 Integration Matrix</option>
+      <option value="CARDS_ENGINE">🃏 Cards Engine</option>
+      <option value="IDENTITY_CARDS">🪪 Identity Cards</option>
+      <option value="FLOW_SYSTEM">🔁 Flow System</option>
+      <option value="FLOW_SPIRIT">✨ Flow + Spirit</option>
+      <option value="KNOWLEDGE_CORE">📜 Knowledge Core</option>
+      <option value="OUTPUT_SYSTEM">🖨️ Output System</option>
+      <option value="UI_UX">🎨 UI/UX</option>
+    </select>
+    <select id="status">
+      <option value="">📌 כל הסטטוסים</option>
+      <option value="ACTIVE">✅ ACTIVE</option>
+      <option value="LEGACY">🕰️ LEGACY</option>
+      <option value="DRAFT">🧪 DRAFT</option>
+      <option value="ARCHIVED">📦 ARCHIVED</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:60px">ID</th>
+          <th>🔗 Link</th>
+          <th>🧠 Name</th>
+          <th style="width:220px">🧱 Layer</th>
+          <th>🎯 Purpose</th>
+          <th style="width:220px">🧰 Repo Path</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card graph" style="margin-top:12px">
+    <div class="mini">🕸️ Graph View (Parents → Child). לחיצה על Node תפתח את הלינק.</div>
+    <svg id="svg" viewBox="0 0 1100 420" preserveAspectRatio="none"></svg>
+  </div>
+</div>
+
+<script>
+  const NODES = [
+    {
+      id: 1,
+      url: "https://gemini.google.com/share/42bd89d141b0",
+      name: "Studio Cognitive v4.4",
+      layer: "META_SYSTEM",
+      cluster: "STUDIO_COGNITIVE",
+      version: "4.4",
+      status: "ACTIVE",
+      purpose: "שליטת־על ואבולוציית מערכות",
+      tags: ["meta", "studio", "control"],
+      parents: [],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/meta/studio-cognitive-v4.4",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 2,
+      url: "https://gemini.google.com/share/78798cc2c00f",
+      name: "Studio Cognitive v4.4.4",
+      layer: "META_SYSTEM",
+      cluster: "STUDIO_COGNITIVE",
+      version: "4.4.4",
+      status: "ACTIVE",
+      purpose: "ניהול גרסאות ותודעה",
+      tags: ["meta", "versions"],
+      parents: [1],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/meta/studio-cognitive-v4.4.4",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 3,
+      url: "https://gemini.google.com/share/ca26941af8c0",
+      name: "HolisView Freedom",
+      layer: "FLOW_SYSTEM",
+      cluster: "HOLISVIEW",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "גמילה מעישון ושינוי הרגלים",
+      tags: ["flow", "freedom", "quit"],
+      parents: [8, 17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/flow/holisview-freedom",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 4,
+      url: "https://gemini.google.com/share/317310707237",
+      name: "Torah ID – 24 Cards",
+      layer: "IDENTITY_CARDS",
+      cluster: "TORAH_ID",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "זהות, ערכים, קלפי תודעה",
+      tags: ["cards", "identity", "torah"],
+      parents: [6, 15],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/cards/torah-id-24",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 5,
+      url: "https://gemini.google.com/share/79ca238d5acf",
+      name: "HolisView ULTRA",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "HOLISVIEW",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "מנוע חשיבה אינטגרטיבי",
+      tags: ["ultra", "engine"],
+      parents: [17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/engine/holisview-ultra",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 6,
+      url: "https://gemini.google.com/share/5467273d4031",
+      name: "Card Definition",
+      layer: "CARDS_ENGINE",
+      cluster: "HOLISVIEW",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "מבנה קלף כיחידת מידע",
+      tags: ["schema", "card"],
+      parents: [15],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "schemas/card-definition",
+        entry_file: "card.schema.json"
+      }
+    },
+    {
+      id: 7,
+      url: "https://gemini.google.com/share/013d76a02397",
+      name: "Personal Prayer System (72 Names)",
+      layer: "FLOW_SPIRIT",
+      cluster: "PRAYER",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "תפילה אישית מנוקדת (ע״ב)",
+      tags: ["prayer", "spirit"],
+      parents: [19],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/spirit/personal-prayer-72",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 8,
+      url: "https://gemini.google.com/share/600c22beff62",
+      name: "HolisView Pro v7.0",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "HOLISVIEW",
+      version: "7.0",
+      status: "ACTIVE",
+      purpose: "ניתוח פרד״ס מודרני",
+      tags: ["pro", "pardes"],
+      parents: [17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/engine/holisview-pro-v7",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 9,
+      url: "https://gemini.google.com/share/e7a1bbb418a1",
+      name: "HolisView 5.0 Platinum",
+      layer: "INTEGRATION_MATRIX",
+      cluster: "HOLISVIEW",
+      version: "5.0.0",
+      status: "LEGACY",
+      purpose: "אינטגרציה מערכתית",
+      tags: ["matrix", "platinum"],
+      parents: [],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/matrix/holisview-5.0-platinum",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 10,
+      url: "https://gemini.google.com/share/da824d8487a1",
+      name: "HolisView 5.1 Gemini-AI",
+      layer: "INTEGRATION_MATRIX",
+      cluster: "HOLISVIEW",
+      version: "5.1.0",
+      status: "LEGACY",
+      purpose: "AI + תודעה",
+      tags: ["matrix", "gemini-ai"],
+      parents: [9],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/matrix/holisview-5.1-gemini-ai",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 11,
+      url: "https://gemini.google.com/share/90918d618301",
+      name: "HolisView 4.2 GOLD",
+      layer: "INTEGRATION_MATRIX",
+      cluster: "HOLISVIEW",
+      version: "4.2.0",
+      status: "LEGACY",
+      purpose: "אינטגרציה מוקדמת",
+      tags: ["gold", "matrix"],
+      parents: [],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/matrix/holisview-4.2-gold",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 12,
+      url: "https://gemini.google.com/share/26470b04c0de",
+      name: "HolisView PRO 4.1.1",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "HOLISVIEW",
+      version: "4.1.1",
+      status: "LEGACY",
+      purpose: "בסיס Pro (דור מוקדם)",
+      tags: ["pro", "legacy"],
+      parents: [11],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/engine/holisview-pro-4.1.1",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 13,
+      url: "https://gemini.google.com/share/d750cd0bda58",
+      name: "HolisView PRO 4.0",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "HOLISVIEW",
+      version: "4.0",
+      status: "LEGACY",
+      purpose: "בסיס Pro ראשוני",
+      tags: ["pro", "foundation"],
+      parents: [11],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/engine/holisview-pro-4.0",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 14,
+      url: "https://gemini.google.com/share/89167e55a63f",
+      name: "HolisView AI Holistic Analysis System",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "HOLISVIEW",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "ניתוח AI הוליסטי",
+      tags: ["ai", "analysis"],
+      parents: [8, 17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/engine/holisview-ai-analysis",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 15,
+      url: "https://gemini.google.com/share/79e2e9826310",
+      name: "Infinite Cards Engine",
+      layer: "CARDS_ENGINE",
+      cluster: "INFINITE_CARDS",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "מנוע יצירת קלפים אינסופי",
+      tags: ["infinite", "cards", "generator"],
+      parents: [6],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/cards/infinite-cards-engine",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 16,
+      url: "https://gemini.google.com/share/b5f228292073",
+      name: "HolisView MATRIX Build 8.6 (JSON FIX)",
+      layer: "INTEGRATION_MATRIX",
+      cluster: "HOLISVIEW",
+      version: "8.6",
+      status: "ACTIVE",
+      purpose: "תיקוני JSON למטריצה",
+      tags: ["json", "fix", "matrix"],
+      parents: [17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/matrix/holisview-matrix-8.6",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 17,
+      url: "https://gemini.google.com/share/b9db4d17c38c",
+      name: "HolisView Unified v9.0 (UNIFIED MATRIX)",
+      layer: "META_SYSTEM",
+      cluster: "HOLISVIEW",
+      version: "9.0",
+      status: "ACTIVE",
+      purpose: "מטריצה מאוחדת – שכבת־על",
+      tags: ["unified", "meta", "v9"],
+      parents: [],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/meta/holisview-unified-v9",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 18,
+      url: "https://gemini.google.com/share/b4388898c3c8",
+      name: "HolisView ULTRA Web (Cloud Sync ALL-IN-ONE)",
+      layer: "META_SYSTEM",
+      cluster: "HOLISVIEW",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "ALL-IN-ONE ענני",
+      tags: ["cloud", "web", "sync"],
+      parents: [5, 17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/meta/holisview-ultra-web",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 19,
+      url: "https://gemini.google.com/share/1d02f2aec10e",
+      name: "Sefer Yetzirah GEN 2.0",
+      layer: "KNOWLEDGE_CORE",
+      cluster: "HOLISVIEW",
+      version: "2.0",
+      status: "ACTIVE",
+      purpose: "ליבת ידע – ספר יצירה מודרני",
+      tags: ["knowledge", "sefer-yetzirah"],
+      parents: [],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/knowledge/sefer-yetzirah-gen-2",
+        entry_file: "README.md"
+      }
+    },
+    {
+      id: 20,
+      url: "https://gemini.google.com/share/6f367e6cb814",
+      name: "Publishing Studio",
+      layer: "OUTPUT_SYSTEM",
+      cluster: "PUBLISHING",
+      version: "1.0",
+      status: "ACTIVE",
+      purpose: "הוצאה לאור ותוצרים",
+      tags: ["publishing", "output"],
+      parents: [17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/output/publishing-studio",
+        entry_file: "README.md"
+      }
+    }
+  ];
+
+  const layerColor = (layer) => ({
+    META_SYSTEM: getCSS('--meta'),
+    COGNITIVE_ENGINE: getCSS('--engine'),
+    INTEGRATION_MATRIX: getCSS('--matrix'),
+    CARDS_ENGINE: getCSS('--cards'),
+    IDENTITY_CARDS: getCSS('--identity'),
+    FLOW_SYSTEM: getCSS('--flow'),
+    FLOW_SPIRIT: getCSS('--spirit'),
+    KNOWLEDGE_CORE: getCSS('--knowledge'),
+    OUTPUT_SYSTEM: getCSS('--output'),
+    UI_UX: getCSS('--uiux')
+  }[layer] || '#94a3b8');
+
+  function getCSS(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+  const rows = document.getElementById('rows');
+  const q = document.getElementById('q');
+  const layer = document.getElementById('layer');
+  const status = document.getElementById('status');
+
+  function badge(layerKey){
+    const c = layerColor(layerKey);
+    const label = layerKey.replaceAll('_',' ');
+    return `<span class="badge"><span class="dot" style="background:${c}"></span>${label}</span>`;
+  }
+
+  function matches(node, text){
+    const t = text.toLowerCase();
+    const hay = [
+      node.name, node.purpose, (node.tags||[]).join(' '),
+      node.layer, node.cluster, node.version, node.status
+    ].join(' ').toLowerCase();
+    return hay.includes(t);
+  }
+
+  function renderTable(){
+    const text = q.value.trim();
+    const lf = layer.value.trim();
+    const sf = status.value.trim();
+
+    const data = NODES.filter(n => {
+      if (lf && n.layer !== lf) return false;
+      if (sf && n.status !== sf) return false;
+      if (text && !matches(n, text)) return false;
+      return true;
+    });
+
+    rows.innerHTML = data.map(n => `
+      <tr>
+        <td><strong>${n.id}</strong><div class="mini">${n.version}</div></td>
+        <td><a href="${n.url}" target="_blank" rel="noreferrer">Open</a></td>
+        <td class="grid2">
+          <div><strong>${escapeHTML(n.name)}</strong></div>
+          <div class="mini">Cluster: ${escapeHTML(n.cluster)} • Status: ${escapeHTML(n.status)}</div>
+        </td>
+        <td>${badge(n.layer)}</td>
+        <td>${escapeHTML(n.purpose)}</td>
+        <td class="mini">
+          <div><strong>${escapeHTML(n.repo.repo_name)}</strong></div>
+          <div>${escapeHTML(n.repo.path)}</div>
+          <div>${escapeHTML(n.repo.entry_file)}</div>
+        </td>
+      </tr>
+    `).join('');
+
+    renderGraph(data.length ? data : NODES);
+  }
+
+  function escapeHTML(s){
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  const svg = document.getElementById('svg');
+  function renderGraph(nodes){
+    svg.innerHTML = '';
+    const W = 1100, H = 420;
+    const layers = [
+      "META_SYSTEM","INTEGRATION_MATRIX","COGNITIVE_ENGINE","CARDS_ENGINE","IDENTITY_CARDS",
+      "FLOW_SYSTEM","FLOW_SPIRIT","KNOWLEDGE_CORE","OUTPUT_SYSTEM","UI_UX"
+    ];
+    const byLayer = new Map(layers.map(l => [l, []]));
+    nodes.forEach(n => (byLayer.get(n.layer) || byLayer.set(n.layer, []).get(n.layer)).push(n));
+
+    const colX = (i) => 40 + i * ((W-80)/(layers.length-1));
+    const pos = new Map();
+    layers.forEach((l, i) => {
+      const arr = (byLayer.get(l) || []);
+      arr.sort((a,b)=>a.id-b.id);
+      arr.forEach((n, j) => {
+        const y = 40 + (j+1) * ( (H-80) / (arr.length+1) );
+        pos.set(n.id, {x: colX(i), y});
+      });
+    });
+
+    nodes.forEach(n => {
+      (n.parents || []).forEach(p => {
+        const a = pos.get(p), b = pos.get(n.id);
+        if (!a || !b) return;
+        const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+        line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+        line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+        line.setAttribute('class','edge');
+        svg.appendChild(line);
+      });
+    });
+
+    nodes.forEach(n => {
+      const p = pos.get(n.id);
+      if (!p) return;
+
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.setAttribute('class','node');
+      g.addEventListener('click', ()=> window.open(n.url, '_blank'));
+
+      const c = layerColor(n.layer);
+
+      const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      circle.setAttribute('cx', p.x);
+      circle.setAttribute('cy', p.y);
+      circle.setAttribute('r', 7);
+      circle.setAttribute('fill', c);
+      svg.appendChild(circle);
+
+      const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+      text.setAttribute('x', p.x + 12);
+      text.setAttribute('y', p.y + 4);
+      text.textContent = `${n.id}. ${n.name}`;
+      g.appendChild(text);
+      svg.appendChild(g);
+    });
+  }
+
+  [q, layer, status].forEach(el => el.addEventListener('input', renderTable));
+  [layer, status].forEach(el => el.addEventListener('change', renderTable));
+
+  renderTable();
+</script>
+</body>
+</html>
