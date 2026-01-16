@@ -213,6 +213,7 @@
       border: 1px solid var(--line-0);
       border-radius: var(--radius-2);
       box-shadow: var(--shadow-0);
+      min-width: 0;
     }
 
     .glass {
@@ -305,12 +306,20 @@
       gap: var(--gap-4);
       grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
       align-items: start;
+      min-width: 0;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
     }
 
     .table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
+      min-width: 520px;
+      table-layout: fixed;
     }
 
     .table th,
@@ -318,6 +327,8 @@
       padding: 10px;
       border-bottom: 1px solid var(--line-0);
       vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .table th {
@@ -342,6 +353,7 @@
       display: grid;
       gap: var(--gap-3);
       grid-template-columns: 1fr 1fr;
+      min-width: 0;
     }
 
     .graph {
@@ -8534,6 +8546,19 @@
       tags: ["publishing", "output"],
       parents: [17],
       repo: { repo_name: "MatrixForge", path: "nodes/output/publishing-studio", entry_file: "README.md" }
+    },
+    {
+      id: 21,
+      url: "https://gemini.google.com/share/d2c8918b0df5",
+      name: "NESHAMAROOT Cognitive Engine v4.5",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "NESHAMAROOT",
+      version: "4.5",
+      status: "ACTIVE",
+      purpose: "שידוכים וזוגיות – התאמה קוגניטיבית ומיפוי קשרים",
+      tags: ["שידוכים", "זוגיות", "matchmaking", "relationships", "cognitive"],
+      parents: [17],
+      repo: { repo_name: "MatrixForge", path: "nodes/engine/neshamaroot-cognitive-v4.5", entry_file: "README.md" }
     }
   ];
 
@@ -8646,7 +8671,7 @@
             <div class="mini">Cluster: ${escapeHTML(node.cluster)} • Status: ${escapeHTML(node.status)}</div>
           </td>
           <td>${escapeHTML(node.purpose)}</td>
-          <td class="mono">${escapeHTML(node.repo.path)}</td>
+          <td class="mono">${escapeHTML(node.repo?.path ?? '—')}</td>
         </tr>
       `).join('');
 
@@ -8654,7 +8679,7 @@
         <tr>
           <td class="mono">${escapeHTML(node.version)}</td>
           <td>${escapeHTML(node.status)}</td>
-          <td>${escapeHTML(node.tags.join(', '))}</td>
+          <td>${escapeHTML((node.tags || []).join(', '))}</td>
         </tr>
       `).join('');
 
@@ -8667,34 +8692,38 @@
           <p class="section-sub">${items.length} Nodes במקטע זה.</p>
           <div class="two-col">
             <div class="card">
-              <table class="table" aria-label="טבלת Nodes">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Link</th>
-                    <th>Name</th>
-                    <th>Purpose</th>
-                    <th>Repo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${rowsHtml || '<tr><td colspan="5" class="mini">אין נתונים להצגה</td></tr>'}
-                </tbody>
-              </table>
+              <div class="table-wrap">
+                <table class="table" aria-label="טבלת Nodes">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Link</th>
+                      <th>Name</th>
+                      <th>Purpose</th>
+                      <th>Repo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${rowsHtml || '<tr><td colspan="5" class="mini">אין נתונים להצגה</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div class="card">
-              <table class="table" aria-label="טבלת סטטוס ותמונות">
-                <thead>
-                  <tr>
-                    <th>Version</th>
-                    <th>Status</th>
-                    <th>Tags</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${summaryHtml || '<tr><td colspan="3" class="mini">אין נתונים להצגה</td></tr>'}
-                </tbody>
-              </table>
+              <div class="table-wrap">
+                <table class="table" aria-label="טבלת סטטוס ותמונות">
+                  <thead>
+                    <tr>
+                      <th>Version</th>
+                      <th>Status</th>
+                      <th>Tags</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${summaryHtml || '<tr><td colspan="3" class="mini">אין נתונים להצגה</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>
