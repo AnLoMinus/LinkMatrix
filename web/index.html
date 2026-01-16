@@ -21,9 +21,9 @@
     .panel{display:grid;grid-template-columns:1fr 220px 220px;gap:10px;margin-bottom:12px}
     input,select{width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--line);
       background:rgba(15,23,42,.75); color:var(--text); outline:none;}
-    .card{background:rgba(15,23,42,.72); border:1px solid var(--line); border-radius:16px; overflow:hidden}
-    table{width:100%; border-collapse:collapse}
-    th,td{padding:12px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+    .card{background:rgba(15,23,42,.72); border:1px solid var(--line); border-radius:16px; overflow:hidden; min-width:0}
+    table{width:100%; border-collapse:collapse; min-width:0; table-layout:auto}
+    th,td{padding:12px 12px; border-bottom:1px solid var(--line); vertical-align:top; word-break:break-word; overflow-wrap:anywhere}
     th{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); background:rgba(2,6,23,.4)}
     td{font-size:14px}
     a{color:#93c5fd; text-decoration:none}
@@ -436,6 +436,23 @@
         path: "nodes/output/publishing-studio",
         entry_file: "README.md"
       }
+    },
+    {
+      id: 21,
+      url: "https://gemini.google.com/share/d2c8918b0df5",
+      name: "NESHAMAROOT Cognitive Engine v4.5",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "NESHAMAROOT",
+      version: "4.5",
+      status: "ACTIVE",
+      purpose: "שידוכים וזוגיות – התאמה קוגניטיבית ומיפוי קשרים",
+      tags: ["שידוכים", "זוגיות", "matchmaking", "relationships", "cognitive"],
+      parents: [17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/engine/neshamaroot-cognitive-v4.5",
+        entry_file: "README.md"
+      }
     }
   ];
 
@@ -497,9 +514,9 @@
         <td>${badge(n.layer)}</td>
         <td>${escapeHTML(n.purpose)}</td>
         <td class="mini">
-          <div><strong>${escapeHTML(n.repo.repo_name)}</strong></div>
-          <div>${escapeHTML(n.repo.path)}</div>
-          <div>${escapeHTML(n.repo.entry_file)}</div>
+          <div><strong>${escapeHTML(n.repo?.repo_name ?? '—')}</strong></div>
+          <div>${escapeHTML(n.repo?.path ?? '—')}</div>
+          <div>${escapeHTML(n.repo?.entry_file ?? '—')}</div>
         </td>
       </tr>
     `).join('');
