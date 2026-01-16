@@ -8534,6 +8534,19 @@
       tags: ["publishing", "output"],
       parents: [17],
       repo: { repo_name: "MatrixForge", path: "nodes/output/publishing-studio", entry_file: "README.md" }
+    },
+    {
+      id: 21,
+      url: "https://gemini.google.com/share/d2c8918b0df5",
+      name: "NESHAMAROOT Cognitive Engine v4.5",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "NESHAMAROOT",
+      version: "4.5",
+      status: "ACTIVE",
+      purpose: "שידוכים וזוגיות – התאמה קוגניטיבית ומיפוי קשרים",
+      tags: ["שידוכים", "זוגיות", "matchmaking", "relationships", "cognitive"],
+      parents: [17],
+      repo: { repo_name: "MatrixForge", path: "nodes/engine/neshamaroot-cognitive-v4.5", entry_file: "README.md" }
     }
   ];
 
@@ -8646,7 +8659,7 @@
             <div class="mini">Cluster: ${escapeHTML(node.cluster)} • Status: ${escapeHTML(node.status)}</div>
           </td>
           <td>${escapeHTML(node.purpose)}</td>
-          <td class="mono">${escapeHTML(node.repo.path)}</td>
+          <td class="mono">${escapeHTML(node.repo?.path ?? '—')}</td>
         </tr>
       `).join('');
 
@@ -8654,7 +8667,7 @@
         <tr>
           <td class="mono">${escapeHTML(node.version)}</td>
           <td>${escapeHTML(node.status)}</td>
-          <td>${escapeHTML(node.tags.join(', '))}</td>
+          <td>${escapeHTML((node.tags || []).join(', '))}</td>
         </tr>
       `).join('');
 
