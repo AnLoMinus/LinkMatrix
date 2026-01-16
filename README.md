@@ -29,6 +29,7 @@
 | 18 | [https://gemini.google.com/share/b4388898c3c8](https://gemini.google.com/share/b4388898c3c8) | HolisView ULTRA Web     | 🛰️ Meta + Cloud      | ALL‑IN‑ONE ענני            |
 | 19 | [https://gemini.google.com/share/1d02f2aec10e](https://gemini.google.com/share/1d02f2aec10e) | Sefer Yetzirah GEN 2.0  | 📜 Knowledge Core     | ספר יצירה מודרני           |
 | 20 | [https://gemini.google.com/share/6f367e6cb814](https://gemini.google.com/share/6f367e6cb814) | Publishing Studio       | 🖨️ Output System     | הוצאה לאור ותוצרים         |
+| 21 | [https://gemini.google.com/share/d2c8918b0df5](https://gemini.google.com/share/d2c8918b0df5) | NESHAMAROOT Cognitive Engine v4.5 | 🧠 Cognitive Engine | שידוכים וזוגיות            |
 
 ---
 
@@ -150,6 +151,7 @@ AnLoMinus שולט במפת התודעה. ⚡
         "STUDIO_COGNITIVE",
         "HOLISVIEW",
         "INFINITE_CARDS",
+        "NESHAMAROOT",
         "TORAH_ID",
         "PRAYER",
         "PUBLISHING"
@@ -461,6 +463,19 @@ AnLoMinus שולט במפת התודעה. ⚡
     "tags": ["publishing", "output"],
     "parents": [17],
     "repo": { "repo_name": "MatrixForge", "path": "nodes/output/publishing-studio", "entry_file": "README.md" }
+  },
+  {
+    "id": 21,
+    "url": "https://gemini.google.com/share/d2c8918b0df5",
+    "name": "NESHAMAROOT Cognitive Engine v4.5",
+    "layer": "COGNITIVE_ENGINE",
+    "cluster": "NESHAMAROOT",
+    "version": "4.5",
+    "status": "ACTIVE",
+    "purpose": "שידוכים וזוגיות – התאמה קוגניטיבית ומיפוי קשרים",
+    "tags": ["שידוכים", "זוגיות", "matchmaking", "relationships", "cognitive"],
+    "parents": [17],
+    "repo": { "repo_name": "MatrixForge", "path": "nodes/engine/neshamaroot-cognitive-v4.5", "entry_file": "README.md" }
   }
 ]
 ```

@@ -436,6 +436,23 @@
         path: "nodes/output/publishing-studio",
         entry_file: "README.md"
       }
+    },
+    {
+      id: 21,
+      url: "https://gemini.google.com/share/d2c8918b0df5",
+      name: "NESHAMAROOT Cognitive Engine v4.5",
+      layer: "COGNITIVE_ENGINE",
+      cluster: "NESHAMAROOT",
+      version: "4.5",
+      status: "ACTIVE",
+      purpose: "שידוכים וזוגיות – התאמה קוגניטיבית ומיפוי קשרים",
+      tags: ["שידוכים", "זוגיות", "matchmaking", "relationships", "cognitive"],
+      parents: [17],
+      repo: {
+        repo_name: "MatrixForge",
+        path: "nodes/engine/neshamaroot-cognitive-v4.5",
+        entry_file: "README.md"
+      }
     }
   ];
 
@@ -497,9 +514,9 @@
         <td>${badge(n.layer)}</td>
         <td>${escapeHTML(n.purpose)}</td>
         <td class="mini">
-          <div><strong>${escapeHTML(n.repo.repo_name)}</strong></div>
-          <div>${escapeHTML(n.repo.path)}</div>
-          <div>${escapeHTML(n.repo.entry_file)}</div>
+          <div><strong>${escapeHTML(n.repo?.repo_name ?? '—')}</strong></div>
+          <div>${escapeHTML(n.repo?.path ?? '—')}</div>
+          <div>${escapeHTML(n.repo?.entry_file ?? '—')}</div>
         </td>
       </tr>
     `).join('');
