@@ -213,6 +213,7 @@
       border: 1px solid var(--line-0);
       border-radius: var(--radius-2);
       box-shadow: var(--shadow-0);
+      min-width: 0;
     }
 
     .glass {
@@ -305,12 +306,20 @@
       gap: var(--gap-4);
       grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
       align-items: start;
+      min-width: 0;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
     }
 
     .table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
+      min-width: 520px;
+      table-layout: fixed;
     }
 
     .table th,
@@ -318,6 +327,8 @@
       padding: 10px;
       border-bottom: 1px solid var(--line-0);
       vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .table th {
@@ -342,6 +353,7 @@
       display: grid;
       gap: var(--gap-3);
       grid-template-columns: 1fr 1fr;
+      min-width: 0;
     }
 
     .graph {
@@ -8680,34 +8692,38 @@
           <p class="section-sub">${items.length} Nodes במקטע זה.</p>
           <div class="two-col">
             <div class="card">
-              <table class="table" aria-label="טבלת Nodes">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Link</th>
-                    <th>Name</th>
-                    <th>Purpose</th>
-                    <th>Repo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${rowsHtml || '<tr><td colspan="5" class="mini">אין נתונים להצגה</td></tr>'}
-                </tbody>
-              </table>
+              <div class="table-wrap">
+                <table class="table" aria-label="טבלת Nodes">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Link</th>
+                      <th>Name</th>
+                      <th>Purpose</th>
+                      <th>Repo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${rowsHtml || '<tr><td colspan="5" class="mini">אין נתונים להצגה</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div class="card">
-              <table class="table" aria-label="טבלת סטטוס ותמונות">
-                <thead>
-                  <tr>
-                    <th>Version</th>
-                    <th>Status</th>
-                    <th>Tags</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${summaryHtml || '<tr><td colspan="3" class="mini">אין נתונים להצגה</td></tr>'}
-                </tbody>
-              </table>
+              <div class="table-wrap">
+                <table class="table" aria-label="טבלת סטטוס ותמונות">
+                  <thead>
+                    <tr>
+                      <th>Version</th>
+                      <th>Status</th>
+                      <th>Tags</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${summaryHtml || '<tr><td colspan="3" class="mini">אין נתונים להצגה</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>
